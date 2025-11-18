@@ -5,6 +5,7 @@
 // 			and then returns that information.
 
 package main
+
 import (
 	"bufio"
 	"fmt"
@@ -24,21 +25,34 @@ func main() {
 
 	// input
 	fmt.Print("What is your name? ")
-	userName, _ = reader.ReadString('\n')
+	userName, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("Error reading name:", err)
+		return
+	}
 	userName = strings.TrimSpace(userName)
 
 	fmt.Print("How old are you? ")
-	ageAsString, _ = reader.ReadString('\n')
+	ageAsString, err = reader.ReadString('\n')
+	if err != nil {
+		fmt.Println("Error reading age:", err)
+		return // Exit on error
+	}
 	ageAsString = strings.TrimSpace(ageAsString)
 
-	// process
-	ageAsNumber, _ = strconv.Atoi(ageAsString)
+	// // process
+	ageAsNumber, err = strconv.Atoi(ageAsString)
+	if err != nil {
+		fmt.Println("Error: Please enter a valid number for your age. Conversion failed.")
+		return
+	}
 	ageFiveYearsAgo = ageAsNumber - 5
 
-	// output
+	// // output
 	fmt.Println()
-	fmt.Printf("Hello, " + userName + "!\n")
-	fmt.Printf("Five years ago, you were " + strconv.Itoa(ageFiveYearsAgo) + " years old.")
+	fmt.Println("Hello, " + userName + "!")
+	fmt.Println("You are " + strconv.Itoa(ageAsNumber) + "years old.")
+	fmt.Printf("Five years ago, you were %d years old.\n", ageFiveYearsAgo)
 
 	fmt.Println("\nDone.")
 }
